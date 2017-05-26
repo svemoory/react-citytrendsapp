@@ -13,14 +13,17 @@ var config = {
   externals: {
     'react': reactExternal,
   },
-  module: {
+      module: {
     loaders: [
-      { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+      { test: /\.css$/, include: path.resolve(__dirname, 'src'),  loader: 'style-loader!css-loader' },
+      { test: /\.js[x]?$/,  exclude: /node_modules/, loader: 'babel-loader' },
+ { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url-loader?limit=8192' }
     ]
   },
+
   output: {
-    filename: 'dist/ReactWidgetSelection.min.js',
-    library: 'ReactWidgetSelection',
+    filename: 'dist/ReactWidgetApp.min.js',
+    library: 'ReactWidgetApp',
     libraryTarget: 'umd',
   },
   plugins: [

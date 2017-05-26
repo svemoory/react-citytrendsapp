@@ -1,0 +1,82 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.bi-pageheader {
+    padding: 2rem 15px;
+    margin-bottom: 1.5rem;
+    color: white;
+    text-align: center;
+    background-color: #000;
+}
+
+.bi-logo {
+    padding: 2rem 15px;   
+    color: black;   
+    background-color: white;
+}
+
+.bi-url {
+    padding: 2rem 15px;   
+    color: black;   
+    background-color: lightgrey;
+   
+}
+
+.mb{
+
+  margin-bottom: 20px;
+}
+
+.bi-bannertop {  
+  padding: 1rem 10px ;
+ color:white;
+ font-family:ProximaNova, sans-serif; 
+ font-size: 60px;
+
+}
+
+.bi-bannerbottom {  
+   padding: .25rem;
+ color:white;
+ font-family:ProximaNova, sans-serif; 
+ font-size: 30px;
+}
+
+
+.hidden {
+  display: none!important;
+  visibility: hidden!important;
+}
+.pointer{
+cursor: pointer;
+}
+.roundedbutton{
+  border-radius: 25px
+}
+
+#ChartFrame {
+    border: 0;
+    margin: 2rem 0;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

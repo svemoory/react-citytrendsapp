@@ -18,12 +18,14 @@ module.exports = {
 
   devtool: 'cheap-module-inline-source-map',
 
-  module: {
-    rules: [{
-      test: /\.js?$/,
-      use: ['babel-loader'],
-      exclude: /node_modules/
-    }]
+
+
+      module: {
+    loaders: [
+      { test: /\.css$/,  loader: 'style-loader!css-loader' },
+      { test: /\.js[x]?$/,  exclude: /node_modules/, loader: 'babel-loader' },
+ { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url-loader?limit=8192' }
+    ]
   },
 
   plugins: [
