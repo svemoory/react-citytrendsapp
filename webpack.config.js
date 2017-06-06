@@ -5,7 +5,7 @@ module.exports = {
 
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:5000',
+    'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
     './site/src/index.js'
   ],
@@ -36,7 +36,7 @@ module.exports = {
 
   devServer: {
     host: 'localhost',
-    port: 5000,
+    port: 3000,
     historyApiFallback: true,
     hot: true
   }

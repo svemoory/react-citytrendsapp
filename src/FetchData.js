@@ -6,7 +6,7 @@ import { MLSGeography } from "react-mlsdata";
 @observer
 export default class FetchData extends Component {
   render() {
-    console.log('reached here');
+   
       const store = this.props;
     var test = (
       <MLSGeography>

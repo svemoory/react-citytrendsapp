@@ -12,17 +12,17 @@ class WidgetSelectionStore {
   }
 
   @observable state = {
-    selectType: {
+    selectgeotype: {
       label: "GeographyType",
       selected: "",
       values: []
     },
-      selectValues: {
+    selectgeovalue: {
     label: "GeographyName",
     selected: "",
     values: []
-  },
-   selectPeriodType: {
+    },
+   selectperiodtype: {
     label: "PeriodTYpe",
     selected: "",
     values: [ {
@@ -41,12 +41,12 @@ class WidgetSelectionStore {
         label: "Year"
       }]
   },
-   selectPeriodValue: {
+   selectperiodvalue: {
     label: "PeriodValue",
     selected: "",
     values: []
   },
-  measures:{
+  selectmeasure:{
        label: "Measures",
     selected: "",
     values: [     {
@@ -72,71 +72,68 @@ class WidgetSelectionStore {
                  {
         value: "SaleVolume",
         id: "M5",
-        label: "Sale Volume"
+        label: "SaleVolume"
       },
                        {
-        value: "Inventory",
+        value: "InventoryCount",
         id: "M6",
-        label: "Inventory"
-      },
-                             {
-        value: "Default",
-        id: "M7",
-        label: "Default"
-      }
- 
+        label: "InventoryCount"
+      } 
       ]
   },
-  monthvals:[{ value: "01", id: "M1",label: "January"},
-  { value: "02", id: "M2",label: "February"},
-  { value: "03", id: "M3",label: "March"},
-  { value: "04", id: "M4",label: "April"},
-  { value: "05", id: "M5",label: "May"},
-  { value: "06", id: "M6",label: "June"},
-  { value: "07", id: "M7",label: "July"},
-  { value: "08", id: "M8",label: "August"},
-  { value: "09", id: "M9",label: "September"},
-  { value: "10", id: "M10",label: "October"},
-  { value: "11", id: "M11",label: "November"},
-  { value: "12", id: "M12",label: "December"}  
+  monthvals:[{ value: "3", id: "M1",label: "3"},
+  { value: "6", id: "M2",label: "6"},
+  { value: "12", id: "M3",label: "12"},
+
   ],
-  qvals:[{ value: "Q1", id: "M1",label: "Q1"},
-  { value: "Q2", id: "Q2",label: "Q2"},
-  { value: "Q3", id: "Q3",label: "Q3"},
-  { value: "Q4", id: "Q4",label: "Q4"},
+  qvals:[{ value: "2", id: "Q1",label: "2"},
+  { value: "4", id: "Q2",label: "4"},
+  
   ],
-  yearvals:[{ value: "2017", id: "Y1",label: "2017"},
-  { value: "2016", id: "Y2",label: "2016"},
-  { value: "2015", id: "Y3",label: "2015"},
-  { value: "2014", id: "Y4",label: "2014"},
-  { value: "2013", id: "Y5",label: "2013"}],
+  yearvals:[{ value: "2", id: "Y1",label: "2"},
+  { value: "5", id: "Y2",label: "5"},
+  { value: "10", id: "Y3",label: "10"}
+],
 entity:"Market",
 entityvalue:"MLSL",
+geographies : [],
+assets:{
+    font:{fontsize:"",fontstyle:""},
+    color:{color:"Black"},
+    images:{logo:"",measureimages:[]}
+},
 
-geographies : []
+widgetselections:{
+geographytype:'',
+geographyvalue:'',
+measure:'',
+measurelabel:'',
+isnum:false,
+periodtype:'',
+period:''
+}
+  };
+
+  //populate all geographies
+   @action setgeographyfromdata=newValues=> {
+   
+     this.state.geographies=newValues;
+    var types = uniqBy(newValues, "GeographyTypeCode").map(function(geo) {
+      return {
+        value: geo.GeographyTypeCode,
+        label: geo.GeographyTypeCode,
+        id: uniqueId()
+      };
+    });
+     this.state.selectgeotype.values=types;
   };
 
 
-//Period
-    @action setperiodTypeSelected = e => {
-      console.log
-  // this.state.selectType.selected = e.target.value;
-   this.state.selectPeriodValue.selected = "";
-   var tval = e.target.value; 
-   var periodvalues=[]; 
-var periodvalues=tval=='Month'?this.state.monthvals:tval=='Quarter'?this.state.qvals:tval=='Year'?this.state.yearvals:[];
-      this.state.selectPeriodValue.values = periodvalues;
-      this.state.selectPeriodType.selected=tval;
-  };
-   @action setperiodSelected = e => {
-   this.state.selectPeriodValue.selected = e.target.value;
-  };
-
-
-//geographies
-    @action setTypeSelected = e => {
-   this.state.selectType.selected = e.target.value;
-   this.state.selectValues.selected = "";
+  //on geography selection
+    @action setgeotype = e => {
+     
+   this.state.selectgeotype.selected = e.target.value;
+   this.state.selectgeovalue.selected = "";
    var tval = e.target.value;
    const geographies=this.state.geographies;
     var values = geographies
@@ -147,41 +144,53 @@ var periodvalues=tval=='Month'?this.state.monthvals:tval=='Quarter'?this.state.q
           id: uniqueId(),
           label: tval == "ZIP"? val.ZipCode: tval == "County"? val.CountyName: tval == "Area"? val.AreaName: tval == "City"? val.CityName: tval == "School"? val.SchoolName: tval == "SchoolDistrict"? val.SchoolDistrictName: ""  };
       });
-      this.state.selectValues.values = values;
+      this.state.selectgeovalue.values = values;
+      this.state.widgetselections.geographytype=tval;
   };
 
-   @action setValueSelected = e => {
-   this.state.selectValues.selected = e.target.value;
+   @action setgeovalue = e => {
+    
+   this.state.selectgeovalue.selected = e.target.value;
+   this.state.widgetselections.geographyvalue=e.target.value;
   };
 
-    @action setmeasuresSelected = e => {
-   this.state.measures.selected = e.target.value;
+
+//Period
+    @action setperiodtype = e => {     
+  // this.state.selectType.selected = e.target.value;
+   this.state.selectperiodvalue.selected = "";
+   var tval = e.target.value; 
+   var periodvalues=[]; 
+   var periodvalues=tval=='Month'?this.state.monthvals:tval=='Quarter'?this.state.qvals:tval=='Year'?this.state.yearvals:[];
+   this.state.selectperiodvalue.values = periodvalues;
+   this.state.selectperiodtype.selected=tval;
+   this.state.widgetselections.periodtype=tval;
+  };
+   @action setperiodvalue = e => {
+   this.state.selectperiodvalue.selected = e.target.value;
+   this.state.widgetselections.period=e.target.value;
+  };
+
+    @action setmeasure = e => {
+   var tval = e.target.value;   
+   this.state.selectmeasure.selected = tval;
+   this.state.widgetselections.measure=tval;
+  this.state.widgetselections.measurelabel=tval;
+  var isnum1=tval=='SoldMedListPrice'?'true':tval=='AvgSalePricePerSqft'?'true':'false;'
+  this.state.widgetselections.isnum=isnum1;
   };
 
 
 
-
-//populate all geographies
-   @action SetValues(newValues) {
-     this.state.geographies=newValues;
-    var types = uniqBy(newValues, "GeographyTypeCode").map(function(geo) {
-      return {
-        value: geo.GeographyTypeCode,
-        label: geo.GeographyTypeCode,
-        id: uniqueId()
-      };
-    });
-     this.state.selectType.values=types;
-  };
 
 //computed values
   @computed get displayKPIWidget()
   {
       
     let display=false;
- var geotype =this.state.selectType.selected;
-    var geoname =this.state.selectValues.selected;
-    var measure =this.state.measures.selected;
+ var geotype =this.state.selectgeotype.selected;
+    var geoname =this.state.selectgeovalue.selected;
+    var measure =this.state.selectmeasure.selected;
   
     if (measure !== "" && geotype !== "" && geoname !== "") {
      display=true;
@@ -194,10 +203,10 @@ return display;
   {
       
     let display=false;
- var geotype =this.state.selectType.selected;
-    var geoname =this.state.selectValues.selected;
-    var measure =this.state.measures.selected;
-    var periodtype =this.state.selectPeriodType.selected;
+ var geotype =this.state.selectgeotype.selected;
+    var geoname =this.state.selectgeovalue.selected;
+    var measure =this.state.selectmeasure.selected;
+    var periodtype =this.state.selectperiodtype.selected;
   
     if (measure !== "" && geotype !== "" && geoname !== "" && periodtype !== "") {
      display=true;
@@ -210,11 +219,11 @@ return display;
   {
       
     let display=false;
- var geotype =this.state.selectType.selected;
-    var geoname =this.state.selectValues.selected;
-    var measure =this.state.measures.selected;
-      var periodtype =this.state.selectPeriodType.selected;
-    var period =this.state.selectPeriodValue.selected;
+ var geotype =this.state.selectgeotype.selected;
+    var geoname =this.state.selectgeovalue.selected;
+    var measure =this.state.selectmeasure.selected;
+      var periodtype =this.state.selectperiodtype.selected;
+    var period =this.state.selectperiodvalue.selected;
   
     if (measure !== "" && geotype !== "" && geoname !== "" && periodtype !== "" && period !== "") {
      display=true;
@@ -222,13 +231,13 @@ return display;
     }
 return display;
   }
-@computed get KPIfilter(){
- var geotype =this.state.selectType.selected;
-    var geoname =this.state.selectValues.selected;
-    var measure =this.state.measures.selected;
+/*@computed get KPIfilter(){
+ var geotype =this.state.selectgeotype.selected;
+    var geoname =this.state.selectgeovalue.selected;
+    var measure =this.state.selectmeasure.selected;
 
       if (measure !== "" && geotype !== "" && geoname !== "") {
-     const filter ={and: [{GeographyType: `${this.state.selectType.selected}`}, { GeographyName:`${this.state.selectValues.selected}`},{Class : 'Residential'}]} ;
+     const filter ={and: [{GeographyType: `${this.state.selectgeotype.selected}`}, { GeographyName:`${this.state.selectgeovalue.selected}`},{Class : 'Residential'}]} ;
     return filter;
     }
 
@@ -239,22 +248,17 @@ return display;
 
 @computed get KPIselect(){
         
-  if(this.state.measures.selected!="")
+  if(this.state.selectmeasure.selected!="")
   {
-  const select =`GeographyName,GeographyType,${this.state.measures.selected}`;
-  console.log('select',select);
+  const select =`GeographyName,GeographyType,SoldCount,${this.state.selectmeasure.selected}`;
+
   return select;
 }
 else
 return "";
-}
+}*/
 
 }
-
-
-
-
-
 
 
 var store = (window.store = new WidgetSelectionStore());

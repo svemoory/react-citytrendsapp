@@ -10,7 +10,13 @@ this.handlechange=this.handlechange.bind(this);
   }
   handlechange(e)
   {
-//console.log(e);
+/*      console.log(e.loading);
+  if(e.loading=='false')
+  {
+   //console.log(!e.loading);
+   // store.setgeographyfromdata(e.data);
+  }*/
+
   }
 render(){
 
