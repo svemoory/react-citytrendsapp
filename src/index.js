@@ -142,7 +142,10 @@ export default class WidgetSelection extends Component {
         </div>
 
         <div className="bi-pageheader">
-          git remote add origin https://mlslteam.visualstudio.com/_git/react-dashboard
+           
+
+          <Container>
+          <Row>
               <Col md="2">
                 {selectGeotype}
               </Col>
