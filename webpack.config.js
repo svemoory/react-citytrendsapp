@@ -4,16 +4,14 @@ var webpack = require('webpack');
 module.exports = {
 
   entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './site/src/index.js'
+
+    './src/index.js'
   ],
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'site', 'dist'),
-    publicPath: '/site/dist/'
+  //  path: path.resolve(__dirname, 'site', 'dist'),
+   // publicPath: '/site/dist/'
   },
 
   devtool: 'cheap-module-inline-source-map',
@@ -36,7 +34,7 @@ module.exports = {
 
   devServer: {
     host: 'localhost',
-    port: 3000,
+    port: 5000,
     historyApiFallback: true,
     hot: true
   }

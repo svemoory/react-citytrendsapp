@@ -1,60 +1,43 @@
+var path = require('path');
 var webpack = require('webpack');
-var env = process.env.NODE_ENV;
 
-var reactExternal = {
-  root: 'React',
-  commonjs2: 'react',
-  commonjs: 'react',
-  amd: 'react'
-};
+module.exports = {
 
-var config = {
-  entry: './src/index',
-  externals: {
-    'react': reactExternal,
+  entry: [
+
+    './src/index.js'
+  ],
+
+  output: {
+    filename: 'dist/bundle.js',
+  //  path: path.resolve(__dirname, 'site', 'dist'),
+   // publicPath: '/site/dist/'
   },
+
+  devtool: 'cheap-module-inline-source-map',
+
+
+
       module: {
     loaders: [
-      { test: /\.css$/, include: path.resolve(__dirname, 'src'),  loader: 'style-loader!css-loader' },
+      { test: /\.css$/,  loader: 'style-loader!css-loader' },
       { test: /\.js[x]?$/,  exclude: /node_modules/, loader: 'babel-loader' },
  { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url-loader?limit=8192' }
     ]
   },
 
-  output: {
-    filename: 'dist/ReactWidgetApp.min.js',
-    library: 'ReactWidgetApp',
-    libraryTarget: 'umd',
-  },
   plugins: [
-    {
-      apply: function apply(compiler) {
-        compiler.plugin("parser", function(parser, options) {
-          parser.plugin('expression global', function expressionGlobalPlugin() {
-            this.state.module.addVariable('global', "(function() { return this; }()) || Function('return this')()")
-            return false;
-          });
-        });
-      }
-    },
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
-    })
-  ]
-}
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 
-if (env === 'production') {
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        pure_getters: true,
-        unsafe: true,
-        unsafe_comps: true,
-        screw_ie8: true,
-        warnings: false
-      }
-    })
-  )
-}
+  devServer: {
+    host: 'localhost',
+    port: 5000,
+    historyApiFallback: true,
+    hot: true
+  }
+  
+};
 
-module.exports = config;

@@ -1,35 +1,79 @@
+/* Utilities */
+
+.pos-relative {
+    position: relative!important;
+}
+
+.pos-absolute {
+    position: absolute!important;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+/* Heading */
+
 .bi-logo1 {
     padding: 1rem 15px;
     color: black;
     background-color: white;
 }
+.title.justify-content-center.row {  
+    font-size: 25px;
+     margin-bottom: 2rem;
+  
+}
+
+/* Body Styles */
+
+#appBody {
+    background: white;
+}
+
+button { 
+    text-transform:none!important;
+}
+
+.btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle {
+    color: white!important;
+    background-color: gray!important;
+    background-image: none;
+    border-color: #adadad;
+}
+
+
+span.d-inline-block.w-100.attribution-label.count-holder {
+    padding-top: 1rem;
+    font-size: 14px;
+}
 button.btn.btn-secondary {
   margin: .5rem;
 }
 .bi-widgetselection {
-  padding: 1rem 15px;
+  padding: .5rem 15px;
   margin-bottom: 1.5rem;
   color: white;
   text-align: center;
-  background-color: whitesmoke;
+  background-color: lightgrey;
 }
 
 .bi-geoselection {
-  padding: 1rem 15px;
+  padding: 1rem 10px;
   margin-bottom: 1.5rem;
   color: white;
   text-align: center;
   background-color: black;
 }
 
-.bi-bannertop {
-  padding: 1rem 10px;
+.bi-bannertop1 {
+  padding: .5rem 10px;
   color: white;
   font-family: ProximaNova, sans-serif;
-  font-size: 40px;
+  font-size: 50px;
 }
-.bi-bannerbottom {
-  padding: .25rem;
+.bi-bannerbottom1 {
+  padding: .5rem;
   color: white;
   font-family: ProximaNova, sans-serif;
   font-size: 30px;
@@ -37,4 +81,16 @@ button.btn.btn-secondary {
 .hidden {
   display: none !important;
   visibility: hidden !important;
+}
+
+
+/* Widget Container Styles */
+
+.widgetContainer, .widgetHolder {
+    min-height: 400px;
+}
+
+.btn-group-period {
+    top: -79px;
+    left: 323px;
 }
