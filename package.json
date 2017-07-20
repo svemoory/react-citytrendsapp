@@ -1,7 +1,7 @@
 {
   "name": "react-citytrendsapp",
   "version": "1.0.0",
-  "description": "A React app for to generate a widget using react-mlsdata and react-widget packages",
+  "description": "A React app for to generate a widget using packages widget components",
   "keywords": [
     "react",
     "react-component"
