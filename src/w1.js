@@ -38,19 +38,22 @@ export default class WidgetView1 extends Component {
               id:"ptm-1",
               type: "Month",
               value: 12,
-              active: true
+              active: true,
+              enabled: true,
             },
             {
               id:"ptq-1",
               type: "Quarter",
               value: 4,
-              active: false
+              active: false,
+              enabled: true,
             },
             {
               id:"pty-1",
               type: "Year",
               value: 1,
-              active: false
+              active: false,
+              enabled: true,
             }
           ]
         },
@@ -65,19 +68,22 @@ export default class WidgetView1 extends Component {
               id:"ptm-2",
               type: "Month",
               value: 12,
-              active: false
+              active: false,
+              enabled: true,
             },
             {
               id:"ptq-2",
               type: "Quarter",
               value: 4,
-              active: true
+              active: true,
+              enabled: true,
             },
             {
               id:"pty-2",
               type: "Year",
               value: 1,
-              active: false
+              active: false,
+              enabled: true,
             }
           ]
         },
@@ -92,19 +98,22 @@ export default class WidgetView1 extends Component {
               id:"ptm-3",
               type: "Month",
               value: 12,
-              active: false
+              active: false,
+              enabled: false,
             },
             {
               id:"ptq-2",
               type: "Quarter",
               value: 4,
-              active: false
+              active: false,
+              enabled: true,
             },
             {
               id:"pty-3",
               type: "Year",
               value: 1,
-              active: true
+              active: true,
+              enabled: true,
             }
           ]
         }
@@ -232,7 +241,10 @@ export default class WidgetView1 extends Component {
     };
 
     let PeriodDropdownToggleButtons = this.state.widgetPeriodBtns.map(btn => {
-      let BtnOptions = btn.options.map((option => {     
+      let BtnOptions = btn.options.map((option => {
+        if(!option.enabled){
+          return true;
+        }  
         return <DropdownItem onClick={this._periodOptionClick.bind(this, option, btn)} key={uniqueId("periodToggleOption_")} className={`mx-0 periodType pl-0 ${option.active === true ? "isActive": ""}`}>{option.type}</DropdownItem>      
       }).bind(this));
       return(

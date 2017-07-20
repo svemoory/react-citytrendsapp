@@ -137,7 +137,9 @@ export default class WidgetSelection extends Component {
               </Button>
             </Row>
 
-            {widget}
+            <div>
+              {widget}
+            </div>
           </Container>
         </div>
       </div>

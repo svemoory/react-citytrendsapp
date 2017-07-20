@@ -17,10 +17,9 @@ export default class Market_Trends extends Component {
 
   render() {
     return (
-      <div>
-        <Container fluid={true}>
+        <Container id="widgetChartContainer" className="text-center" fluid={false}>
           <Row>
-            <Col sm={{ size: 6, push: 2, pull: 2, offset: 1 }}>
+            <Col sm={{ size: 12 }}>
               <MTWidget
                 {...this.props}
                 widgetselections={this.props.widgetoptions}
@@ -29,7 +28,6 @@ export default class Market_Trends extends Component {
             </Col>
           </Row>
         </Container>
-      </div>
     );
   }
 }

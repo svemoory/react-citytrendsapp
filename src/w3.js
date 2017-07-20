@@ -43,7 +43,7 @@ geosplit.split(':')[0].toLowerCase()=='zip'?widgetselections.geographyvalue=geos
     console.log(this.state.widgetselections);
     return (
       <div>
-        <Container fluid={true}>
+        <Container id="widgetChartContainer" fluid={false}>
           <PWidget widgetselections={this.state.widgetselections} assets="" />
         </Container>
       </div>
