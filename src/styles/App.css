@@ -176,6 +176,47 @@ button.btn.btn-secondary {
     left: 323px;
 }
 
+/* KPI Widget Styles */
+.kpiWidgetMedia {
+  height: 80px;
+}
+
+.kpiWidgetPoweredLogo {
+  margin-top: -4px;
+}
+
+.kpiWidget.card {
+  border: 1px solid rgb(204, 204, 204);
+  border-top: 6px solid #c43a3a;
+  background: white;
+  box-shadow: 5px 5px 8px 1px rgba(0,0,0,.3);
+}
+
+.kpiWidget .card-title {
+  font-size: 2rem;
+}
+
+.attribution-link {
+  text-decoration: none!important;
+}
+
+/* Pie Widget Styles */
+
+.pieWidget.card {
+  border: 1px solid rgb(204, 204, 204);   
+  background: white;
+  box-shadow: 5px 5px 8px 1px rgba(0,0,0,.3);
+}
+
+.pieWidget.middle, .pieWidget:hover {
+  opacity: 1;
+}
+
+.pieWidget {
+  opacity: .5;
+  cursor: pointer;
+}
+
 /* Period Selector Buttons */
 button.periodType.dropdown-item:before {
     content: '\002714';
@@ -187,7 +228,7 @@ button.periodType.dropdown-item.isActive:before {
     visibility: visible;
 }
 
-div#widget-container .kpiWidget.card {
+div#widget-container .kpiWidget.card, div#widgetPieContainer .pieWidget.card {
   display: flex;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
@@ -197,4 +238,12 @@ div#widget-container .kpiWidget.card {
 select#geo-select {
   width: 50%;
   max-width: 475px;
+}
+
+.containerc {
+  margin: 0 auto;
+  padding: 40px;
+  width: 80%;
+  color: #333;
+  background: #419be0;
 }

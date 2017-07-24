@@ -61,16 +61,19 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
+    "c3": "^0.4.15",
     "css-loader": "^0.28.2",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react": "16.0.0-alpha.13",
+    "react-dom": "16.0.0-alpha.13",
     "react-kpiwidgetdata": "^1.0.7",
     "react-markettrendswidget": "^1.2.0",
     "react-mlsdata": "^0.5.4",
-    "react-piewidget": "^1.0.4",
+    "react-piewidget": "^1.0.7",
+    "react-slick": "^0.14.11",
     "reactstrap": "^4.6.2",
+    "slick-carousel": "^1.6.0",
     "style-loader": "^0.18.0"
   }
 }

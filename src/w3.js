@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Container, Col, Row, Media, Button } from "reactstrap";
-import "./styles/App.css";
-import "bootstrap/dist/css/bootstrap.css";
-
 import PWidget from "react-piewidget";
 
 export default class WidgetView3 extends Component {
@@ -20,33 +17,20 @@ export default class WidgetView3 extends Component {
   componentWillMount() {
     let widgetselections = { ...this.state.widgetselections };
     widgetselections.geo=this.props.geo.split(",");
-/*     this.props.geo.split(',').forEach(function(geosplit){
-geosplit.split(':')[0].toLowerCase()=='zip'?widgetselections.geographytype=geosplit.split(':')[0]:'';
-geosplit.split(':')[0].toLowerCase()=='zip'?widgetselections.geographyvalue=geosplit.split(':')[1]:'';
-} 
-)*/
     this.setState({ widgetselections });
   }
 
   componentWillReceiveProps(nextProps) {
     let widgetselections = { ...this.state.widgetselections };
     widgetselections.geo=nextProps.geo.split(",");
-/*     nextProps.geo.split(',').forEach(function(geosplit){
-geosplit.split(':')[0].toLowerCase()=='zip'?widgetselections.geographytype=geosplit.split(':')[0]:'';
-geosplit.split(':')[0].toLowerCase()=='zip'?widgetselections.geographyvalue=geosplit.split(':')[1]:'';
-} 
-)*/
     this.setState({ widgetselections });
   }
 
   render() {
-    console.log(this.state.widgetselections);
     return (
-      <div>
-        <Container id="widgetChartContainer" fluid={false}>
-          <PWidget widgetselections={this.state.widgetselections} assets="" />
-        </Container>
-      </div>
+      <Container id="widgetPieContainer" fluid={true} className="px-0 mt-4">
+        <PWidget title="Inventory Count" widgetselections={this.state.widgetselections} assets="" />
+      </Container>
     );
   }
 }

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Container, Col, Row, Media, Button,ButtonGroup } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.css";
-import "./styles/App.css";
 import Market_Trends from "./Market_Trends";
 import KPI_Trends from "./KPI_Trends";
 
@@ -94,7 +92,7 @@ let geotype=this.state.btnGEOactive;
  
     return (
       <div>
-        <Container id="widgetChartContainer" fluid={false} className="px-0 mt-4">
+        <Container id="widgetChartContainer" fluid={true} className="px-0 mt-4">
           <Row className="justify-content-center title mx-0">
             Median Sale Price for {geotype} by Year
           </Row>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Container, Col, Row, Media, Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.css";
-import "./styles/App.css";
 import Market_Trends from "./Market_Trends";
 import KPI_Trends from "./KPI_Trends";
 import uniqueId from "lodash/uniqueId";
@@ -259,7 +257,6 @@ export default class WidgetView1 extends Component {
     });
 
     return (
-      <div>
         <Container fluid={true} className="px-0 mt-4">
           <div className="widgetContainer pos-relative">
             <div className="widgetHolder">
@@ -299,7 +296,6 @@ export default class WidgetView1 extends Component {
             assets=""
           />
         </Container>
-      </div>
     );
   }
 }
