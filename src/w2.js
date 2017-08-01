@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Container, Col, Row, Media, Button,ButtonGroup } from "reactstrap";
+import { Container, Col, Row, Media, Button, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import Market_Trends from "./Market_Trends";
 import KPI_Trends from "./KPI_Trends";
+import uniqueId from "lodash/uniqueId";
+import findIndex from "lodash/findIndex";
 
 
 export default class WidgetView2 extends Component {
@@ -11,32 +13,120 @@ export default class WidgetView2 extends Component {
       btnGEOactive: ""
       ,
       widgetselectionsKPI: {
-        measure: "SoldMedListPrice,SoldAvgDOM,AvgSalePricePerSqft",
+        measure: "MedSalePrice,SoldMedDOM,AvgSalePricePerSqft",
         geo: ""
       },
       widgetselectionsMT: {
         geographytype: "",
         geographyvalue: "",
-        measure: "SoldMedListPrice",
+        measure: "MedSalePrice",
         measurelabel: "Median Sale Price",
         isnum: "true",
         periodtype: "Month",
         period: "12",
         geo: ""
-      }
+      },
+      widgetPeriodBtns: [
+        {
+          id: "periodBtnToggle-1",
+          isOpen: false,
+          isActive: true,
+          label: "1 Year",
+          value: 1,
+          options: [
+            {
+              id:"ptm-1",
+              type: "Month",
+              value: 12,
+              active: true,
+              enabled: true,
+            },
+            {
+              id:"ptq-1",
+              type: "Quarter",
+              value: 4,
+              active: false,
+              enabled: true,
+            },
+            {
+              id:"pty-1",
+              type: "Year",
+              value: 1,
+              active: false,
+              enabled: true,
+            }
+          ]
+        },
+        {
+          label: "2 Years",
+          id: "periodBtnToggle-2",
+          isOpen: false,
+          isActive: false,
+          value: 2,
+          options: [
+            {
+              id:"ptm-2",
+              type: "Month",
+              value: 12,
+              active: false,
+              enabled: true,
+            },
+            {
+              id:"ptq-2",
+              type: "Quarter",
+              value: 4,
+              active: true,
+              enabled: true,
+            },
+            {
+              id:"pty-2",
+              type: "Year",
+              value: 1,
+              active: false,
+              enabled: false,
+            }
+          ]
+        },
+        {
+          label: "5 Years",
+          id: "periodBtnToggle-3",
+          isOpen: false,
+          isActive: false,
+          value: 5,
+          options: [
+            {
+              id:"ptm-3",
+              type: "Month",
+              value: 12,
+              active: false,
+              enabled: false,
+            },
+            {
+              id:"ptq-2",
+              type: "Quarter",
+              value: 4,
+              active: false,
+              enabled: true,
+            },
+            {
+              id:"pty-3",
+              type: "Year",
+              value: 1,
+              active: true,
+              enabled: true,
+            }
+          ]
+        }
+      ],
     };
     this._onKPISelect = this._onKPISelect.bind(this);
-    this._onsetPeriod = this._onsetPeriod.bind(this);
+
+    this._periodButtonClick = this._periodButtonClick.bind(this);
+    this._periodOptionClick = this._periodOptionClick.bind(this);
+    this._periodDropdownToggle = this._periodDropdownToggle.bind(this);
   }
 
-        _onsetPeriod(rpSelected) {
-       let widgetselectionsMT={...this.state.widgetselectionsMT};
-      
-     rpSelected=='1'? widgetselectionsMT.periodtype='Month':widgetselectionsMT.periodtype='Year';
-     widgetselectionsMT.period=rpSelected;
 
-    this.setState({ widgetselectionsMT });
-  }
 
     _onKPISelect(geo) {     
     var selectedGEO =geo;   
@@ -50,6 +140,57 @@ geosplit.split(':')[0].toLowerCase()==selectedGEO.toLowerCase()? geofilter=[geos
     widgetselectionsKPI.geo = geofilter;
     widgetselectionsMT.geo = geofilter;
     this.setState({ widgetselectionsKPI, widgetselectionsMT,btnGEOactive });
+  }
+
+  _periodButtonClick(btn) {
+    let widgetPeriodBtnsState = this.state.widgetPeriodBtns;
+    let widgetselectionsMT = this.state.widgetselectionsMT;
+    
+    for(var b in widgetPeriodBtnsState){
+      widgetPeriodBtnsState[b].isActive = false; 
+    }
+
+    let index = findIndex(widgetPeriodBtnsState, b => b.id === btn.id)
+    let activeTypeIndex = findIndex(widgetPeriodBtnsState[index].options, type => type.active === true )
+
+    widgetselectionsMT.periodtype = widgetPeriodBtnsState[index].options[activeTypeIndex].type;
+    widgetselectionsMT.period = widgetPeriodBtnsState[index].value * widgetPeriodBtnsState[index].options[activeTypeIndex].value;
+
+    widgetPeriodBtnsState[index].isActive = !widgetPeriodBtnsState[index].isActive;
+
+    this.setState({widgetPeriodBtnsState, widgetselectionsMT});
+  }
+
+  _periodOptionClick(periodval,btn) {    
+      let widgetPeriodBtnsState = this.state.widgetPeriodBtns;
+      let widgetselectionsMT = this.state.widgetselectionsMT; 
+    
+     let parentindex = findIndex(widgetPeriodBtnsState, b => b.id === btn.id)     
+     let activeoptionindex = findIndex(widgetPeriodBtnsState[parentindex].options, o => o.id === periodval.id)
+     
+
+       for(let record in widgetPeriodBtnsState[parentindex].options){    
+        widgetPeriodBtnsState[parentindex].options[record].active=false;      
+      } 
+      widgetPeriodBtnsState[parentindex].options[activeoptionindex].active=!widgetPeriodBtnsState[parentindex].options[activeoptionindex].active;
+  
+
+      widgetselectionsMT.periodtype = widgetPeriodBtnsState[parentindex].options[activeoptionindex].type;
+      widgetselectionsMT.period = widgetPeriodBtnsState[parentindex].value * widgetPeriodBtnsState[parentindex].options[activeoptionindex].value;
+  
+      this.setState({widgetPeriodBtnsState, widgetselectionsMT});
+
+    
+  }
+
+  _periodDropdownToggle(btn) {
+    let widgetPeriodBtnsState = this.state.widgetPeriodBtns;
+
+    let index = findIndex(widgetPeriodBtnsState, b => b.id === btn.id)
+
+    widgetPeriodBtnsState[index].isOpen = !widgetPeriodBtnsState[index].isOpen;
+
+    this.setState({widgetPeriodBtnsState});
   }
 
 
@@ -85,60 +226,80 @@ geosplit.split(':')[0].toLowerCase()=='city'? geofilter=[geosplit]:''
     this.setState({ widgetselectionsKPI, widgetselectionsMT,btnGEOactive });
   }
 
-  render() {
+  
 
-let geotype=this.state.btnGEOactive;
+  render() {
+    let geotype=this.state.btnGEOactive;
+
+    var measurelabel ="Median Sale Price";
+    
+     
+
+
+let chartOptions = {
+  titleclasses: "row justify-content-center title mx-0",
+  chartclasses: "mb-4",
+  optionclasses: "justify-content-center",
+  widgetoptions: this.state.widgetselectionsMT,
+  assets: "",
+  chartTitle: `${measurelabel} by Year`
+};
+
+let PeriodDropdownToggleButtons = this.state.widgetPeriodBtns.map(btn => {
+  let BtnOptions = btn.options.map((option => {
+    if(!option.enabled){
+      return true;
+    }  
+    return <DropdownItem onClick={this._periodOptionClick.bind(this, option, btn)} key={uniqueId("periodToggleOption_")} className={`mx-0 periodType pl-0 ${option.active === true ? "isActive": ""}`}>{option.type}</DropdownItem>      
+  }).bind(this));
+  return(
+    <ButtonDropdown key={uniqueId("periodToggle_")} id={btn.id} isOpen={btn.isOpen} toggle={this._periodDropdownToggle.bind(this, btn)}>
+    <Button className="mr-0" active={btn.isActive} onClick={this._periodButtonClick.bind(this, btn)}>{btn.label}</Button>
+    <DropdownToggle caret />
+    <DropdownMenu>
+      {BtnOptions}
+    </DropdownMenu>
+    </ButtonDropdown>
+  )
+});
   
  
     return (
-      <div>
-        <Container id="widgetChartContainer" fluid={true} className="px-0 mt-4">
-          <Row className="justify-content-center title mx-0">
-            Median Sale Price for {geotype} by Year
-          </Row>
 
-          <div className="widgetContainer pos-relative">
-            <div className="widgetHolder">
-              <Market_Trends widgetoptions={this.state.widgetselectionsMT} assets="" />
-            </div>
-            <Container fluid={true} className="px-0">
-            <Row className="mx-0">
-              <Col className="col-sm-6 push-sm-2 pull-sm-2 offset-sm-1">
-                <ButtonGroup className="pos-absolute btn-group-period">
-                  <Button onClick={() => this._onsetPeriod('12')}>1 Year</Button>
-                  <Button onClick={() => this._onsetPeriod('2')}>2 Years</Button>
-                  <Button onClick={() => this._onsetPeriod('5')}>5 Years</Button>
-                </ButtonGroup>
-              </Col>
-            </Row>
-            </Container>
-          </div>
-
-          <Row className="bi-widgetselection justify-content-center mx-0">
-            <Button
-              active={this.state.btnGEOactive === 'City'} onClick={() => this._onKPISelect('City')}
-              color="secondary">
-              City
-            </Button>
-            <Button
-              active={this.state.btnGEOactive === 'Zip'} onClick={() => this._onKPISelect('Zip')}
-              color="secondary">
-              Zip
-            </Button>
-            <Button
-              active={this.state.btnGEOactive === 'Area'} onClick={() => this._onKPISelect('Area')}
-              color="secondary">
-              Area
-            </Button>
-          </Row>
-                    <Row className="justify-content-center title mx-0">
-            Key Performance Indicators by {geotype}
-          </Row>
-         <KPI_Trends widgetoptions={this.state.widgetselectionsKPI} assets="" />
-        </Container>
-
-
+      <Container fluid={true} className="px-0 mt-4">
+      <div className="widgetContainer pos-relative">
+        <div className="widgetHolder">
+          <Market_Trends {...chartOptions}>
+            <ButtonGroup>
+              {PeriodDropdownToggleButtons}
+            </ButtonGroup>
+          </Market_Trends>
+        </div>
       </div>
+
+      <Row className="bi-widgetselection justify-content-center mx-0">
+      <Button
+      active={this.state.btnGEOactive === 'City'} onClick={() => this._onKPISelect('City')}
+      color="secondary">
+      City
+    </Button>
+    <Button
+      active={this.state.btnGEOactive === 'Zip'} onClick={() => this._onKPISelect('Zip')}
+      color="secondary">
+      Zip
+    </Button>
+    <Button
+      active={this.state.btnGEOactive === 'Area'} onClick={() => this._onKPISelect('Area')}
+      color="secondary">
+      Area
+    </Button>
+      </Row>
+      <Row className="justify-content-center title mx-0">
+      Key Performance Indicators by {geotype}
+    </Row>
+    <KPI_Trends title='swap' widgetoptions={this.state.widgetselectionsKPI} assets="" />
+    </Container>
+
     );
   }
 }

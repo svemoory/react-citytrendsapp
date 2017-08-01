@@ -1,6 +1,6 @@
 {
   "name": "react-citytrendsapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React app for to generate a widget using packages widget components",
   "keywords": [
     "react",
@@ -60,6 +60,7 @@
     "react-dom": "^15.3.0"
   },
   "dependencies": {
+    "@types/d3": "^4.10.0",
     "bootstrap": "^4.0.0-alpha.6",
     "c3": "^0.4.15",
     "css-loader": "^0.28.2",
@@ -67,10 +68,10 @@
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.13",
     "react-dom": "16.0.0-alpha.13",
-    "react-kpiwidgetdata": "^1.0.7",
-    "react-markettrendswidget": "^1.2.0",
+    "react-kpiwidgetdata": "^1.0.81",
+    "react-markettrendswidget": "^1.2.24",
     "react-mlsdata": "^0.5.4",
-    "react-piewidget": "^1.0.7",
+    "react-piewidget": "^1.0.89",
     "react-slick": "^0.14.11",
     "reactstrap": "^4.6.2",
     "slick-carousel": "^1.6.0",

@@ -186,6 +186,7 @@ button.btn.btn-secondary {
 }
 
 .kpiWidget.card {
+
   border: 1px solid rgb(204, 204, 204);
   border-top: 6px solid #c43a3a;
   background: white;
@@ -193,7 +194,7 @@ button.btn.btn-secondary {
 }
 
 .kpiWidget .card-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .attribution-link {
@@ -213,8 +214,8 @@ button.btn.btn-secondary {
 }
 
 .pieWidget {
-  opacity: .5;
-  cursor: pointer;
+  opacity: 1;
+  /* cursor: pointer; */
 }
 
 /* Period Selector Buttons */

@@ -10,10 +10,10 @@ export default class KPI_Trends extends Component {
     super(props);
   }
 
-  render() {
+  render() {  
     return (
       <Container id="widget-container" fluid={false} className="px-0">
-        <KPIWidget widgetselections={this.props.widgetoptions} assets=""/>
+        <KPIWidget widgetselections={this.props.widgetoptions} assets="" {...this.props}/>
       </Container>
     );
   }

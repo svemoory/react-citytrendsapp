@@ -11,13 +11,13 @@ export default class WidgetView1 extends Component {
     this.state = {
       btnKPIactive: "",
       widgetselectionsKPI: {
-        measure: "SoldMedListPrice",
+        measure: "MedSalePrice",
         geo: ""
       },
       widgetselectionsMT: {
         geographytype: "",
         geographyvalue: "",
-        measure: "SoldMedListPrice",
+        measure: "MedSalePrice",
         measurelabel: "Median Sale Price",
         isnum: "true",
         periodtype: "Month",
@@ -51,7 +51,7 @@ export default class WidgetView1 extends Component {
               type: "Year",
               value: 1,
               active: false,
-              enabled: true,
+              enabled: false,
             }
           ]
         },
@@ -81,7 +81,7 @@ export default class WidgetView1 extends Component {
               type: "Year",
               value: 1,
               active: false,
-              enabled: true,
+              enabled: false,
             }
           ]
         },
@@ -118,7 +118,6 @@ export default class WidgetView1 extends Component {
       ],
     };
     this._onKPISelect = this._onKPISelect.bind(this);
-    this.test = this.test.bind(this);
     this._periodButtonClick = this._periodButtonClick.bind(this);
     this._periodOptionClick = this._periodOptionClick.bind(this);
     this._periodDropdownToggle = this._periodDropdownToggle.bind(this);
@@ -130,12 +129,12 @@ export default class WidgetView1 extends Component {
     var geosplit = nextProps.geo.split(",");
     widgetselectionsKPI.geo = geosplit;
     widgetselectionsMT.geo = geosplit;
-    var btnKPIactive = "SoldMedListPrice";
+    var btnKPIactive = "MedSalePrice";
     var btnPeriodactive="1";
     this.setState({ widgetselectionsKPI, widgetselectionsMT, btnKPIactive,btnPeriodactive });
   }
 
-  test(){console.log('test')}
+
 
   _onKPISelect(kpi) {
     var selectedKPI = kpi;
@@ -171,8 +170,14 @@ export default class WidgetView1 extends Component {
       console.log(periodval,btn);
       let widgetPeriodBtnsState = this.state.widgetPeriodBtns;
       let widgetselectionsMT = this.state.widgetselectionsMT; 
+
+      for(var b in widgetPeriodBtnsState){
+        widgetPeriodBtnsState[b].isActive = false; 
+      }
+
     
      let parentindex = findIndex(widgetPeriodBtnsState, b => b.id === btn.id)     
+     widgetPeriodBtnsState[parentindex].isActive = !widgetPeriodBtnsState[parentindex].isActive;
      let activeoptionindex = findIndex(widgetPeriodBtnsState[parentindex].options, o => o.id === periodval.id)
      
 
@@ -203,7 +208,7 @@ export default class WidgetView1 extends Component {
   componentWillMount() {
     let widgetselectionsMT = { ...this.state.widgetselectionsMT };
     let widgetselectionsKPI = { ...this.state.widgetselectionsKPI };
-    var btnKPIactive = "SoldMedListPrice";
+    var btnKPIactive = "MedSalePrice";
     var geosplit = this.props.geo.split(",");
     var btnPeriodactive="1";
     widgetselectionsKPI.geo = geosplit;
@@ -213,21 +218,23 @@ export default class WidgetView1 extends Component {
 
   render() {
     const labels = {
-      SoldMedListPrice: "Median List Price",
+      MedSalePrice: "Median Sale Price",
       SoldCount: "Sold Count",
       InventoryCount: "Inventory Count",
-      SoldAvgDOM: "Avg Days on Market",
-      AvgSalePricePerSqft: "Avg Sale per SqFt"
+      SoldMedDOM: "Med Days on Market",
+      AvgSalePricePerSqft: "Avg Sale per SqFt",
+      ActiveCount: "Active Count"
     };
     let btnactive = this.state.btnKPIactive;
     var measurelabel =
-      btnactive == "SoldMedListPrice"
-        ? labels.SoldMedListPrice
-        : btnactive == "SoldAvgDOM"
-          ? labels.SoldAvgDOM
+      btnactive == "MedSalePrice"
+        ? labels.MedSalePrice
+        : btnactive == "SoldMedDOM"
+          ? labels.SoldMedDOM
           : btnactive == "AvgSalePricePerSqft"
             ? labels.AvgSalePricePerSqft
-            : "";
+            : btnactive == "ActiveCount"
+            ? labels.ActiveCount : "";
 
     let chartOptions = {
       titleclasses: "row justify-content-center title mx-0",
@@ -268,18 +275,18 @@ export default class WidgetView1 extends Component {
             </div>
           </div>
 
-          <Row className="bi-widgetselection justify-content-center mx-0">
+          <Row className="bi-widgetselection justify-content-center mx-1">
             <Button
-              active={this.state.btnKPIactive === "SoldMedListPrice"}
-              onClick={() => this._onKPISelect("SoldMedListPrice")}
+              active={this.state.btnKPIactive === "MedSalePrice"}
+              onClick={() => this._onKPISelect("MedSalePrice")}
               color="secondary">
-              Sold Median List Price
+              Median Sale Price
             </Button>
             <Button
-              active={this.state.btnKPIactive === "SoldAvgDOM"}
-              onClick={() => this._onKPISelect("SoldAvgDOM")}
+              active={this.state.btnKPIactive === "SoldMedDOM"}
+              onClick={() => this._onKPISelect("SoldMedDOM")}
               color="secondary">
-              Sold Avg Days on Market
+              Sold Med Days on Market
             </Button>
             <Button
               active={this.state.btnKPIactive === "AvgSalePricePerSqft"}
@@ -287,6 +294,12 @@ export default class WidgetView1 extends Component {
               color="secondary">
               Avg Sale Price Per SqFt
             </Button>
+            <Button
+active={this.state.btnKPIactive === "ActiveCount"}
+onClick={() => this._onKPISelect("ActiveCount")}
+color="secondary">
+Active Count
+</Button>
           </Row>
           <Row className="justify-content-center title mx-0">
             {measurelabel} by Geographic Location

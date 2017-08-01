@@ -29,6 +29,9 @@ export default class WidgetView3 extends Component {
   render() {
     return (
       <Container id="widgetPieContainer" fluid={true} className="px-0 mt-4">
+<Row className="justify-content-center title mx-0">
+Market Activity
+</Row>
         <PWidget title="Inventory Count" widgetselections={this.state.widgetselections} assets="" />
       </Container>
     );

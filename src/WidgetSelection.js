@@ -31,9 +31,9 @@ export default class WidgetSelection extends Component {
       : selectedGeo.toLowerCase() == "mountain view"
         ? (geo = "City:Mountain View,Zip:94043,Area:Downtown Mountain View")
         : selectedGeo.toLowerCase() == "los altos"
-          ? (geo = "City:Los Altos,Zip:94022,County:Santa Clara")
+          ? (geo = "City:Los Altos,Zip:94022,Area:Los Altos Hills")
           : selectedGeo.toLowerCase() == "san jose"
-            ? (geo = "City:San Jose,Zip:95112,County:San Mateo")
+            ? (geo = "City:San Jose,Zip:95112,Area:South San Jose")
             : (geo = "");
     this.setState({
       selectedGeo,
